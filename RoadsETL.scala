@@ -24,6 +24,7 @@ object RoadsETL {
     roadsDSArray(0)
       .union(roadsDSArray(1))
       .union(roadsDSArray(2))
+      .distinct()
       .withColumn("road_id", monotonically_increasing_id())
       .select(col("road_id"), col("road_name"), col("road_category"), col("road_type"))
       .write
@@ -40,7 +41,6 @@ object RoadsETL {
 
     mainDataDF
       .select(col("road_name"), col("road_category"), col("road_type"))
-      .distinct()
   }
 
 }

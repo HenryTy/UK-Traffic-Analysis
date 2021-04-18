@@ -24,6 +24,7 @@ object TimeETL {
     timesDFArray(0)
       .union(timesDFArray(1))
       .union(timesDFArray(2))
+      .distinct()
       .withColumn("month", functions.month(col("count_date")))
       .withColumn("quarter", functions.quarter(col("count_date")))
       .withColumn("week_day", functions.date_format(col("count_date"), "E"))
@@ -44,7 +45,6 @@ object TimeETL {
 
     mainDataDF
       .select(col("year"), col("count_date"), col("hour"))
-      .distinct()
   }
 
 }
